@@ -37,13 +37,38 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', #new
+
     #Third-party
-    'crispy_forms', #new
+    'crispy_forms',
+    'allauth',#new
+    'allauth.account',#new
+
     #local
     'users.apps.UsersConfig', 
-    'pages.apps.PagesConfig',#new
+    'pages.apps.PagesConfig',
 ]
-CRISPY_TEMPLATE_PACK='bootstrap4'#new
+#django-allauth config
+LOGIN_REDIRECT_URL='home' 
+ACCOUNT_LOGOUT_REDIRECT='home' #new
+
+SITE_ID=1 
+
+AUTHENTICATION_BACKENDS=(
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',#new
+
+)
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'#new
+ACCOUNT_SESSION_REMEMBER=True #new
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE =False #new
+ACCOUNT_USERNAME_REQUIRED =False #new
+ACCOUNT_AUTHENTICATION_METHOD='email' #new
+ACCOUNT_EMAIL_REQUIRED=True #new
+ACCOUNT_UNIQUE_EMAIL= True #new
+
+
+CRISPY_TEMPLATE_PACK='bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'bookstore_project.urls'
@@ -138,5 +164,3 @@ STATICFILES_FINDERS=[
     "django.contrib.staticfiles.finders.AppDirectoriesFinder"
 ]
 AUTH_USER_MODEL='users.CustomUser' 
-LOGIN_REDIRECT_URL='home' 
-LOGOUT_REDIRECT_URL='home'
